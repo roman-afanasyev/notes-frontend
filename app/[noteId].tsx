@@ -1,0 +1,52 @@
+import {useLocalSearchParams} from "expo-router";
+import {NoteEditor} from "@/components/NoteEditor";
+import {useEffect, useState} from "react";
+import Constants from "expo-constants";
+import {Note} from "@/types";
+
+const API_URL = Constants?.expoConfig?.extra?.apiUrl;
+
+export default function EditPage() {
+  const { noteId } = useLocalSearchParams();
+  const [note, setNote] = useState<Note>();
+
+  const fetchNote = async () => {
+    try {
+      const response = await fetch(`${API_URL}/notes/${noteId}`);
+      const { data } = await response.json();
+      console.log(data);
+      setNote(data);
+      // setNotes(mapNoteDataFlatListData(data))
+    } catch (error) {
+      console.error('Ошибка при получении данных:', error);
+    }
+  }
+
+
+  const saveNote = async (newNote: Partial<Note>): Promise<void> => {
+    try {
+      const response = await fetch(`${API_URL}/notes/${noteId}`, {
+        method: "PATCH",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          ...note,
+          ...newNote
+        }),
+      });
+      // const { data } = await response.json();
+      // console.log(data);
+    } catch (error) {
+      console.error('Ошибка при сохранении данных:', error);
+    }
+  }
+
+  useEffect(() => {
+    if (noteId) {
+      fetchNote()
+    }
+  }, [noteId]);
+
+  return (
+    <NoteEditor note={note} onSubmit={saveNote} />
+  )
+}
