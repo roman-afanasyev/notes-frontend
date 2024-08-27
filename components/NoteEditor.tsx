@@ -19,20 +19,22 @@ export const NoteEditor = ({ note, onSubmit }: Props) => {
 
   return (
     <>
-      <ScrollView style={{ backgroundColor: "#fff" }} keyboardDismissMode="interactive">
+      <ScrollView style={{ backgroundColor: "#fff", height: '90%' }} keyboardDismissMode="interactive">
         <TextInput
           style={{
             padding: 16,
+            height: '100%'
           }}
           inputAccessoryViewID={inputAccessoryViewID}
           onChangeText={setContent}
           value={content}
           placeholder={'Please type here…'}
+          multiline
         />
       </ScrollView>
-      <InputAccessoryView nativeID={inputAccessoryViewID}>
-        <Button onPress={() => onSubmit({ content })} title="Save" />
-      </InputAccessoryView>
+      {/*<InputAccessoryView nativeID={inputAccessoryViewID}>*/}
+      {/*  <Button onPress={() => onSubmit({ content })} title="Save" />*/}
+      {/*</InputAccessoryView>*/}
     </>
   )
 }
