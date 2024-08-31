@@ -7,6 +7,7 @@ export default function RootLayout() {
     <MenuProvider>
       <Stack>
         <Stack.Screen name="index" />
+        <Stack.Screen name="[folderId]" />
         <Stack.Screen name="[noteId]" options={{
           headerRight: NoteEllipsisMenu,
         }} />
